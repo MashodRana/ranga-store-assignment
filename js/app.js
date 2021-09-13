@@ -17,10 +17,22 @@ fetchProductDetails = (prodcutId) => {
 // Show single product details
 const seeDetails = (data) => {
   console.log(data)
-  const elm = document.getElementById("single-product-details")
+  const elm = document.getElementById("modal-dialog")
   const div = document.createElement("div");
+  div.classList.add('modal-content');
   div.innerHTML = `
-                    <p>${data.description}</p>
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">${data.title}</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <p>Category: <strong> ${data.category} </strong></p>
+                    <p>Price: <strong> ${data.price} </strong></p>
+                      ${data.description}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                   `;
   elm.innerHTML = "";
   elm.appendChild(div);
