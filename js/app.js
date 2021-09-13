@@ -31,7 +31,7 @@ const seeDetails = (data) => {
                     </div>
                     <div class="modal-body">
                     <p>Category: <strong> ${data.category} </strong></p>
-                    <p>Price: <strong> ${data.price} </strong></p>
+                    <p>Price: <strong> ${data.price} $ </strong></p>
                       ${data.description}
                     </div>
                     <div class="modal-footer">
