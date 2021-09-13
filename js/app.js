@@ -36,16 +36,19 @@ const addToCart = (id, price) => {
 
 const getInputValue = (id) => {
   const element = document.getElementById(id).innerText;
-  const converted = parseInt(element);
+  const converted = parseFloat(element);
   return converted;
 };
 
 // main price update function
 const updatePrice = (id, value) => {
   const convertedOldPrice = getInputValue(id);
+  console.log('converted old price', convertedOldPrice)
   const convertPrice = parseFloat(value);
+  console.log('converted Pirce ', convertPrice)
   const total = convertedOldPrice + convertPrice;
-  document.getElementById(id).innerText = Math.round(total);
+  console.log(total);
+  document.getElementById(id).innerText = (Math.round(total*100)/100).toFixed(2);
 };
 
 // set innerText function
