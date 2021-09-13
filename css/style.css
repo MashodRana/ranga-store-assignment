@@ -29,6 +29,13 @@ body {
   border-radius: 5px;
   /* margin-left: 20px; */
 }
+
+#single-product{
+  margin: auto;
+  width: 50%;
+}
+
+
 #all-products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -5,6 +5,42 @@ const loadProducts = () => {
 };
 
 
+// Extract product details by product Id
+fetchProductDetails = (prodcutId) => {
+  const url = `https://fakestoreapi.com/products/${prodcutId}`
+  fetch(url)
+    .then(res => res.json())
+    .then(data => seeDetails(data))
+  // .then(data => console.log(data))
+}
+
+// Show single product details
+const seeDetails = (data) => {
+  console.log(data)
+  const div = document.createElement("div");
+  div.innerHTML = `
+                    <div class="card mb-3" style="max-width: 540px;">
+                      <div class="row g-0">
+                        <div class="col-md-4">
+                          <img src="${data.image}" class="img-fluid rounded-start" alt="...">
+                        </div>
+                        <div class="col-md-8">
+                          <div class="card-body">
+                            <h5 class="card-title">${data.title}</h5>
+                            <p class="card-text">Category: <small class="text-muted">${data.category}</small></p>
+                            <p class="card-text">Price: <small class="text-muted">${data.price}$</small></p>
+                            <p class="card-text">${data.description}</p>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  `;
+
+  document.getElementById("single-product").appendChild(div);
+
+}
+
 // show all product in UI 
 const showProducts = (products) => {
   const allProducts = products.map((pd) => pd);
@@ -18,14 +54,14 @@ const showProducts = (products) => {
     const filled = `<span class="rating-color""><i class="fas fa-star"></i></span>`;
     const half = `<span class="rating-color""><i class="fas fa-star-half-alt"></i></span>`
     let rates = "";
-    for(let i=1;i<=5;i++){
-      if(product.rating.rate<i && product.rating.rate<=i-1){
-        rates+=empty;
+    for (let i = 1; i <= 5; i++) {
+      if (product.rating.rate < i && product.rating.rate <= i - 1) {
+        rates += empty;
       }
-      else if(product.rating.rate<i && product.rating.rate>i-1){
+      else if (product.rating.rate < i && product.rating.rate > i - 1) {
         rates += half;
       }
-      else{
+      else {
         rates += filled
       }
     }
@@ -39,8 +75,12 @@ const showProducts = (products) => {
       <p>Category: ${product.category}</p>
       <p >${product.rating.count} ${rates} (${product.rating.rate})</p>
       <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
+      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">
+        add to cart
+      </button>
+      <button id="details-btn" onclick="fetchProductDetails(${product.id})" class="btn btn-danger"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Details
+        </button></div>
       `;
     document.getElementById("all-products").appendChild(div);
   }
@@ -71,7 +111,7 @@ const updatePrice = (id, value) => {
   console.log('converted Pirce ', convertPrice)
   const total = convertedOldPrice + convertPrice;
   console.log(total);
-  document.getElementById(id).innerText = (Math.round(total*100)/100).toFixed(2);
+  document.getElementById(id).innerText = (Math.round(total * 100) / 100).toFixed(2);
 };
 
 // set innerText function
@@ -101,6 +141,6 @@ const updateTotal = () => {
   const grandTotal =
     getInputValue("price") + getInputValue("delivery-charge") +
     getInputValue("total-tax");
-  document.getElementById("total").innerText = grandTotal;
+  document.getElementById("total").innerText = (Math.round(grandTotal * 100) / 100).toFixed(2);
 };
 loadProducts();
