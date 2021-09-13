@@ -12,12 +12,32 @@ const showProducts = (products) => {
     const image = product.image;
     const div = document.createElement("div");
     div.classList.add("product");
+
+    // Genearate HTML for  rating 
+    const empty = `<span class="rating-color" "><i class="far fa-star"></i></span>`;
+    const filled = `<span class="rating-color""><i class="fas fa-star"></i></span>`;
+    const half = `<span class="rating-color""><i class="fas fa-star-half-alt"></i></span>`
+    let rates = "";
+    for(let i=1;i<=5;i++){
+      if(product.rating.rate<i && product.rating.rate<=i-1){
+        rates+=empty;
+      }
+      else if(product.rating.rate<i && product.rating.rate>i-1){
+        rates += half;
+      }
+      else{
+        rates += filled
+      }
+    }
+
+
     div.innerHTML = `<div class="single-product">
       <div>
     <img class="product-image" src=${image}></img>
       </div>
       <h3>${product.title}</h3>
       <p>Category: ${product.category}</p>
+      <p >${product.rating.count} ${rates} (${product.rating.rate})</p>
       <h2>Price: $ ${product.price}</h2>
       <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
       <button id="details-btn" class="btn btn-danger">Details</button></div>
@@ -34,7 +54,7 @@ const addToCart = (id, price) => {
   document.getElementById("total-Products").innerText = count;
 
   updateTotal();
-  
+
 };
 
 const getInputValue = (id) => {

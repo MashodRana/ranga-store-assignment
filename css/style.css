@@ -78,6 +78,11 @@ body {
     padding-right: 10px;
   }
 }
+
+.rating-color{
+  color:gold;
+}
+
 @media only screen and (max-width: 468px) {
   #all-products {
     display: grid;
